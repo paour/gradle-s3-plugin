@@ -24,11 +24,14 @@ Plugin Configuration in your build.gradle
 ```
 buildscript {
     dependencies {
-        classpath 'com.github.skhatri:gradle-s3-plugin:1.0.4'
+        classpath 'com.siruplab.maven:gradle-s3-plugin:1.0.5'
         classpath 'joda-time:joda-time:2.4'
     }
     repositories {
         mavenCentral()
+        maven {
+            url "http://maven.siruplab.com/public"
+        }
     }
 }
 apply plugin: 's3'
@@ -48,6 +51,9 @@ s3 {
         // walkthorugh link from AWS on how to set it up
         // https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-walkthrough.html
         link = 'latest/gradle-plugin.jar'
+        def myMetadata = new ObjectMetadata()
+        myMetadata.addUserMetadata("md5", "test")
+        metadata = myMetadata
     }
     download {
         key = 'latest/gradle-plugin.jar'
