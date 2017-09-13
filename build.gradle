@@ -50,14 +50,14 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
             repository(url: project.ext['upload.url']) {
-                authentication(userName: project.ext['upload.user'], password: project.ext['upload.password'])
+                authentication(userName: project.ext.has('upload.user') ? project.ext['upload.user'] : '', password: project.ext.has('upload.password') ? project.ext['upload.password'] : '')
             }
             pom.version = project.version
             pom.artifactId = "${project.artifact}"
             pom.project {
                 name 'Gradle S3 Plugin'
                 description 'Plugin upload and download files from AWS S3 buckets'
-                url 'https://github.com/skhatri/gradle-s3-plugin'
+                url 'https://github.com/paour/gradle-s3-plugin'
                 licenses {
                     license {
                         name 'The Apache Software License, Version 2.0'
@@ -75,12 +75,21 @@ uploadArchives {
                             role 'Developer'
                         }
                     }
+                    developer {
+                        id 'paour'
+                        name 'Pierre Paour'
+                        email 'github@paour.com'
+                        url 'https://github.com/paour'
+                        roles {
+                            role 'Developer'
+                        }
+                    }
                 }
                 scm {
-                    connection 'scm:git:https://github.com/skhatri/gradle-s3-plugin.git'
-                    developerConnection 'scm:git:https://github.com/skhatri/gradle-s3-plugin.git'
+                    connection 'scm:git:https://github.com/paour/gradle-s3-plugin.git'
+                    developerConnection 'scm:git:https://github.com/paour/gradle-s3-plugin.git'
                     tag 'HEAD'
-                    url 'https://github.com/skhatri/gradle-s3-plugin'
+                    url 'https://github.com/paour/gradle-s3-plugin'
                 }
             }
         }
